@@ -18,8 +18,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ccleberg/yoshi"
-Issues = "https://github.com/ccleberg/yoshi/issues"
+Homepage = "https://git.sr.ht/~cxc/yoshi"
+Issues = "https://git.sr.ht/~cxc/yoshi"
 
 [project.scripts]
 yoshi = "yoshi.cli:yoshi"
