@@ -1,6 +1,6 @@
 [project]
 name = "yoshi-cli"
-version = "0.2.1"
+version = "0.2.2"
 authors = [
   { name="Christian Cleberg", email="hello@cleberg.net" },
 ]
@@ -18,8 +18,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://git.sr.ht/~cxc/yoshi"
-Issues = "https://git.sr.ht/~cxc/yoshi"
+Homepage = "https://git.sr.ht/~cxc/yoshi-cli"
+Issues = "https://git.sr.ht/~cxc/yoshi-cli"
 
 [project.scripts]
 yoshi = "yoshi.cli:yoshi"
