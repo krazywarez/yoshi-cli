@@ -1,0 +1,45 @@
+┌──────────────────────────────────────────────────────────────┐
+│  Y O S H I                                 [ KRZ ]   krz.sh  │
+└──────────────────────────────────────────────────────────────┘
+
+WHAT
+  command-line password manager in python + sqlite3. manages accounts
+  and generates random passwords (ascii, min 8 chars) or xkcd-style
+  passphrases (min 3 words).
+
+INSTALL
+  pypi:
+
+      pipx install yoshi-cli
+
+  manual:
+
+      git clone REPO_URL
+      cd yoshi-cli
+      pipx install .
+
+USE
+      yoshi <COMMAND> <FLAG> <PARAMETER>
+
+  commands:
+  --help    -h    print the welcome message
+  --new     -n    create an account
+  --list    -l    list saved accounts
+  --edit    -e    edit an account (needs --uuid and --field)
+  --delete  -d    delete an account (needs --uuid)
+  --purge         purge all accounts, delete the vault
+  --encrypt       encrypt the vault (needs --generate or --keyfile)
+  --decrypt       decrypt the vault (optional --keyfile)
+
+  flags:
+  --uuid      -u    account uuid
+  --field     -f    account field to edit
+  --generate  -g    generate a new key when encrypting
+  --keyfile   -k    path to a saved key file
+
+CONTRIBUTING
+  fork, add features, open a pull request.
+
+┌──────────────────────────────────────────────────────────────┐
+│  krz.sh                                                      │
+└──────────────────────────────────────────────────────────────┘
