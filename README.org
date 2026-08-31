@@ -1,0 +1,49 @@
+#+title: yoshi
+
+* what
+command-line password manager in python + sqlite3. manages accounts
+and generates random passwords (ascii, min 8 chars) or xkcd-style
+passphrases (min 3 words).
+
+* install
+- pypi:
+
+#+begin_src sh
+pipx install yoshi-cli
+#+end_src
+
+- manual:
+
+#+begin_src sh
+git clone REPO_URL
+cd yoshi-cli
+pipx install .
+#+end_src
+
+* use
+#+begin_src sh
+yoshi <COMMAND> <FLAG> <PARAMETER>
+#+end_src
+
+#+begin_example
+commands:
+--help    -h    print the welcome message
+--new     -n    create an account
+--list    -l    list saved accounts
+--edit    -e    edit an account (needs --uuid and --field)
+--delete  -d    delete an account (needs --uuid)
+--purge         purge all accounts, delete the vault
+--encrypt       encrypt the vault (needs --generate or --keyfile)
+--decrypt       decrypt the vault (optional --keyfile)
+#+end_example
+
+#+begin_example
+flags:
+--uuid      -u    account uuid
+--field     -f    account field to edit
+--generate  -g    generate a new key when encrypting
+--keyfile   -k    path to a saved key file
+#+end_example
+
+* contributing
+fork, add features, open a pull request.
