@@ -8,10 +8,8 @@ import argparse
 from yoshi import crypto, database, process
 
 
-def yoshi():
-    """
-    CLI entry point logic, used to parse user inputs.
-    """
+def build_parser() -> argparse.ArgumentParser:
+    """Build the CLI's argument parser."""
     parser = argparse.ArgumentParser(
         description="Manage your username and passwords via a convenient CLI vault."
     )
@@ -79,44 +77,59 @@ def yoshi():
         type=int,
     )
 
-    args = parser.parse_args()
+    return parser
 
+
+def _key(args, prompt: str):
+    """The key from --keyfile, or typed in at *prompt*."""
+    if args.keyfile:
+        return crypto.load_key(args.keyfile[0])
+    return input(prompt)
+
+
+def _crypto_command(args) -> None:
     if args.decrypt:
-        if args.keyfile:
-            key = crypto.load_key(args.keyfile[0])
-        else:
-            key = input("Please enter your decryption key: ")
-        crypto.decrypt(key)
-    elif args.encrypt:
-        if args.generate:
-            key = crypto.generate_key()
-            print(
-                "WRITE THIS KEY DOWN SOMEWHERE SAFE. YOU WILL NOT BE ABLE TO DECRYPT "
-                "YOUR DATA WITHOUT IT!"
-            )
-            print(key.decode())
-            print("\n")
-        else:
-            if args.keyfile:
-                key = crypto.load_key(args.keyfile[0])
-            else:
-                key = input("Please enter your encryption key: ")
-        crypto.encrypt(key)
+        crypto.decrypt(_key(args, "Please enter your decryption key: "))
+        return
+    if args.generate:
+        key = crypto.generate_key()
+        print(
+            "WRITE THIS KEY DOWN SOMEWHERE SAFE. YOU WILL NOT BE ABLE TO DECRYPT "
+            "YOUR DATA WITHOUT IT!"
+        )
+        print(key.decode())
+        print("\n")
+    else:
+        key = _key(args, "Please enter your encryption key: ")
+    crypto.encrypt(key)
+
+
+def _vault_command(args) -> None:
+    if args.new:
+        process.create_account()
+    elif args.list:
+        process.list_accounts()
+    elif args.edit:
+        process.edit_account(args.uuid[0], args.field[0])
+    elif args.delete:
+        process.delete_account(args.uuid[0])
+    elif args.purge:
+        process.purge_accounts()
+    else:
+        raise TypeError(
+            "Please specify a command or use the --help flag for more information."
+        )
+
+
+def yoshi():
+    """
+    CLI entry point logic, used to parse user inputs.
+    """
+    args = build_parser().parse_args()
+    if args.decrypt or args.encrypt:
+        _crypto_command(args)
     elif database.check_table():
-        if args.new:
-            process.create_account()
-        elif args.list:
-            process.list_accounts()
-        elif args.edit:
-            process.edit_account(args.uuid[0], args.field[0])
-        elif args.delete:
-            process.delete_account(args.uuid[0])
-        elif args.purge:
-            process.purge_accounts()
-        else:
-            raise TypeError(
-                "Please specify a command or use the --help flag for more information."
-            )
+        _vault_command(args)
 
 
 if __name__ == "__main__":

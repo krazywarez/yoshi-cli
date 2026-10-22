@@ -5,25 +5,20 @@ Modules imported:
     - database: A custom module providing database functionality.
 """
 
+from dataclasses import dataclass
+
 from yoshi import database
 
 
+@dataclass
 class Account:
     """Represents a login account."""
 
-    def __init__(
-        self,
-        uuid: str,
-        application: str,  # pylint: disable=R0913,R0917
-        username: str,  # pylint: disable=R0913,R0917
-        password: str,
-        url: str,
-    ) -> None:  # pylint: disable=R0913,R0917
-        self.uuid = uuid
-        self.application = application
-        self.username = username
-        self.password = password
-        self.url = url
+    uuid: str
+    application: str
+    username: str
+    password: str
+    url: str
 
     def display_account(self) -> None:
         """Print the account details."""
